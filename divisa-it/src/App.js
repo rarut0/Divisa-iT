@@ -1,12 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
-import Menu from './Menu.js'
 import './App.sass';
 
 function App() {
   return (
     <div className="App">
-      <Menu />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
