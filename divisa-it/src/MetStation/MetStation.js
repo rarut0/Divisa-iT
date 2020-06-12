@@ -82,6 +82,13 @@ function MetStation() {
     </div>
   );
 
+  /**
+   * 
+   * @param {*} coordenada 
+   * 
+   * Esta función del formato en el que viene de AEMTE (Por ejemplo 420616N) y lo transforma en una coordenada interpretable por los marcadores de google maps (Por ejemplo 42.0616)
+   * Para valores localizados al Sur(S) y al Oeste(W) las coordenadas devueltas son negativas
+   */
     function extractorCoordenadas(coordenada) {
         const coorLength = coordenada.length;
         let coor = coordenada.slice(0, coorLength - 1)
