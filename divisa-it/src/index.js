@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.sass";
-import App from "./App";
+import App from "./MainPage/App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route } from "react-router-dom";
-import Menu from './Menu.js'
+import Menu from './Menu/Menu.js'
 
 ReactDOM.render(
   <BrowserRouter>
