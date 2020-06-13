@@ -9,8 +9,8 @@ class Menu extends React.Component {
         <Link className="button" to="/">
           Página Principal
         </Link>
-        <Link className="button" to="/map-api">
-          Map API
+        <Link className="button" to="/met-station">
+          Estacuiones Meteorológicas
         </Link>
         <Link className="button" to="/parking-madrid">
           Lista Aparcamientos
