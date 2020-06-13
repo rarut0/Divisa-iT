@@ -7,6 +7,7 @@ import App from "./MainPage/App";
 import Menu from './Menu/Menu.js'
 import MadridParking from "./MadridParking/MadridParking.js";
 import MetStation from "./MetStation/MetStation";
+import TrafficIncidents from "./TrafficIncidents/TrafficIncidents";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -14,7 +15,7 @@ ReactDOM.render(
     <Route exact path="/" component={App} />
     <Route exact path="/map-api" component={MetStation} />
     <Route exact path="/parking-madrid" component={MadridParking} />
-    <Route exact path="/youtube-api" component={App} />
+    <Route exact path="/traffic-incidents" component={TrafficIncidents} />
     {/* <App /> */}
   </BrowserRouter>,
   document.getElementById("root")

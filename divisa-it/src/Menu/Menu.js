@@ -13,10 +13,10 @@ class Menu extends React.Component {
           Map API
         </Link>
         <Link className="button" to="/parking-madrid">
-          lista aparcamientos
+          Lista Aparcamientos
         </Link>
-        <Link className="button" to="/youtube-api">
-          youtube API
+        <Link className="button" to="/traffic-incidents">
+          Incidencias Tráfico
         </Link>
       </div>
     );
