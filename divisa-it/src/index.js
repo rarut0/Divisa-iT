@@ -9,16 +9,17 @@ import MadridParking from "./MadridParking/MadridParking.js";
 import MetStation from "./MetStation/MetStation";
 import TrafficIncidents from "./TrafficIncidents/TrafficIncidents";
 import Popup from "react-popup";
+import Footer from "./Footer/Footer.js";
 
 ReactDOM.render(
   <BrowserRouter>
+    <Popup />
     <Menu />
     <Route exact path="/" component={App} />
     <Route exact path="/met-station" component={MetStation} />
     <Route exact path="/parking-madrid" component={MadridParking} />
     <Route exact path="/traffic-incidents" component={TrafficIncidents} />
-    {/* <App /> */}
-    <Popup />
+    <Footer />
   </BrowserRouter>,
   document.getElementById("root")
 );
