@@ -1,11 +1,14 @@
 import React from "react";
+import ReactDom from "react-dom";
 import "./MadridParking.sass";
 import dataFetcher from "../dataFetcher.service";
+import Popup from "react-popup";
 
 class MadridParking extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      geolocationError: "",
       error: null,
       isLoaded: false,
       parkings: [],
@@ -16,24 +19,75 @@ class MadridParking extends React.Component {
     const targetUrl =
       "https://datos.madrid.es/egob/catalogo/202625-0-aparcamientos-publicos.json";
 
-      dataFetcher(targetUrl)
-      .then(
-        (result) => {
+    dataFetcher(targetUrl).then(
+      (result) => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              result["@graph"].forEach((parking) => {
+                const distLatitud =
+                  position.coords.latitude - parking.location.latitude;
+                const distLongitud =
+                  position.coords.longitude - parking.location.longitude;
+                parking.distance = Math.sqrt(
+                  distLatitud * distLatitud + distLongitud * distLongitud
+                );
+              });
+              result["@graph"].sort((a, b) => {
+                return a.distance - b.distance;
+              });
+              this.setState({
+                isLoaded: true,
+                parkings: result["@graph"],
+              });
+            },
+            (error) => {
+              let geolocationError;
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  geolocationError =
+                    "El usuario a denegado la petición de Geolocalización.";
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  geolocationError =
+                    "Informacion de localización no disponible.";
+                  break;
+                case error.TIMEOUT:
+                  geolocationError =
+                    "Se ha acabado el tiempo de espera por la respuesta del usuario por la Geolocalización.";
+                  break;
+                case error.UNKNOWN_ERROR:
+                  geolocationError = "Ha ocurrido un error desconocido.";
+                  break;
+              }
+              Popup.alert(geolocationError);
+              this.setState({
+                geolocationError,
+                isLoaded: true,
+                parkings: result["@graph"],
+              });
+            }
+          );
+        } else {
+          Popup.alert("La geolocalizacion no esta soportarda por el navegador");
           this.setState({
+            geolocationError:
+              "La geolocalizacion no esta soportarda por el navegador",
             isLoaded: true,
             parkings: result["@graph"],
           });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
         }
-      );
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error,
+        });
+      }
+    );
   }
   render() {
-    const { error, isLoaded, parkings } = this.state;
+    const { geolocationError, error, isLoaded, parkings } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
