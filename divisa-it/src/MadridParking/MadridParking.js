@@ -1,5 +1,6 @@
 import React from "react";
 import "./MadridParking.sass";
+import dataFetcher from "../dataFetcher.service";
 
 class MadridParking extends React.Component {
   constructor(props) {
@@ -12,12 +13,10 @@ class MadridParking extends React.Component {
   }
 
   componentDidMount() {
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
     const targetUrl =
       "https://datos.madrid.es/egob/catalogo/202625-0-aparcamientos-publicos.json";
 
-    fetch(proxyUrl + targetUrl)
-      .then((res) => res.json())
+      dataFetcher(targetUrl)
       .then(
         (result) => {
           this.setState({
