@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDom from "react-dom";
 import "./MadridParking.sass";
 import dataFetcher from "../dataFetcher.service";
 import Popup from "react-popup";
@@ -8,7 +7,6 @@ class MadridParking extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      geolocationError: "",
       error: null,
       isLoaded: false,
       parkings: [],
@@ -57,12 +55,12 @@ class MadridParking extends React.Component {
                     "Se ha acabado el tiempo de espera por la respuesta del usuario por la Geolocalización.";
                   break;
                 case error.UNKNOWN_ERROR:
+                default:
                   geolocationError = "Ha ocurrido un error desconocido.";
                   break;
               }
               Popup.alert(geolocationError);
               this.setState({
-                geolocationError,
                 isLoaded: true,
                 parkings: result["@graph"],
               });
@@ -71,8 +69,6 @@ class MadridParking extends React.Component {
         } else {
           Popup.alert("La geolocalizacion no esta soportarda por el navegador");
           this.setState({
-            geolocationError:
-              "La geolocalizacion no esta soportarda por el navegador",
             isLoaded: true,
             parkings: result["@graph"],
           });
@@ -87,7 +83,7 @@ class MadridParking extends React.Component {
     );
   }
   render() {
-    const { geolocationError, error, isLoaded, parkings } = this.state;
+    const { error, isLoaded, parkings } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
